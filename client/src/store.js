@@ -8,11 +8,13 @@ import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { getProducts } from './redux/reducers/ProductsReducer';
+import { cartReducer } from './redux/reducers/CartReducer';
 
 const middlewares = [logger, thunk];
 
 const rootReducer = combineReducers({
   products: getProducts,
+  cart: cartReducer,
 });
 
 const store = createStore(
