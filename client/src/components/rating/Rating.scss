@@ -1,0 +1,33 @@
+.golden {
+  color: gold;
+}
+
+.productCard {
+  position: relative;
+}
+
+.addtocart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  background: #f2f2f2;
+  border-radius: 100%;
+  position: absolute;
+  top: 160px;
+  left: 200px;
+
+  &:hover {
+    background: #fff;
+  }
+
+  & .fa-cart-plus {
+    font-size: 22px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
