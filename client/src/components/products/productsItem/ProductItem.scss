@@ -5,3 +5,23 @@
   align-items: center;
   margin-top: 20px;
 }
+
+.productCard {
+  position: relative;
+}
+
+.productPreviewOnHover {
+  width: 250px;
+  height: auto;
+  background: #fff;
+  border: 2px solid #000;
+  position: absolute;
+  left: 50px;
+  z-index: 20;
+  padding: 14px;
+  visibility: hidden;
+}
+
+.addtocart:hover .productPreviewOnHover {
+  visibility: visible;
+}

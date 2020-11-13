@@ -12,13 +12,29 @@ import {
   Button,
   Navbar,
   Badge,
+  Image,
+  ListGroup,
 } from 'react-bootstrap';
+
+import CartPreviewCard from '../components/cart/CartPreviewCard';
+import ProductItem from './products/productsItem/ProductItem';
 const NavbarMain = () => {
   const { cart } = useSelector((state) => state.cart);
   return (
     <Fragment>
       <Navbar bg='dark' variant='dark'>
-        <Navbar.Brand href='/'>EasyShop</Navbar.Brand>
+        <Navbar.Brand href='/' className='mr-auto'>
+          EasyShop
+        </Navbar.Brand>
+        <Form inline>
+          <FormControl
+            type='text'
+            placeholder='Search'
+            className='mr-sm-2'
+            style={{ width: '1120px' }}
+          />
+          <Button variant='outline-info'>Search</Button>
+        </Form>
         <Nav className='mr-auto'>
           <Nav.Link href='/'>Home</Nav.Link>
           <Nav.Link href='#features'>
@@ -41,14 +57,26 @@ const NavbarMain = () => {
             </i>
           </Nav.Link>
         </Nav>
-        <Form inline>
-          <FormControl
-            type='text'
-            placeholder='Search'
-            className='mr-sm-2'
-          />
-          <Button variant='outline-info'>Search</Button>
-        </Form>
+        <div className='cardItemsPreview'>
+          <ListGroup flush>
+            {cart.length > 0 &&
+              cart.map((item) => (
+                <ListGroup.Item className='mb-2'>
+                  <span>
+                    <Image
+                      src={item.image}
+                      fluid
+                      className='cartImg'
+                    />
+                  </span>
+                  <span>{item.qty}</span>
+                </ListGroup.Item>
+              ))}
+            <Button variant='dark' className='mt-3'>
+              Go To Checkout
+            </Button>
+          </ListGroup>
+        </div>
       </Navbar>
       <br />
     </Fragment>
