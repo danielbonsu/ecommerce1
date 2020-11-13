@@ -16,10 +16,19 @@ import {
   ListGroup,
 } from 'react-bootstrap';
 
+import { cartTotals } from '../utils/CartItemsTotals';
+
 import CartPreviewCard from '../components/cart/CartPreviewCard';
 import ProductItem from './products/productsItem/ProductItem';
+
 const NavbarMain = () => {
   const { cart } = useSelector((state) => state.cart);
+  console.log(cart, 'cartyyy');
+  const [totals, setTotals] = useState({
+    totalQTY: 0,
+    totalAmount: 0,
+  });
+
   return (
     <Fragment>
       <Navbar bg='dark' variant='dark'>
@@ -58,6 +67,13 @@ const NavbarMain = () => {
           </Nav.Link>
         </Nav>
         <div className='cardItemsPreview'>
+          <div className='cardItemsPreviewHeader d-flex justify-content-between px-2'>
+            <h6>subtotal-{cartTotals(cart).qtyTotals}</h6>
+            <span>
+              ${cartTotals(cart).totalPrice.toFixed(2)}
+            </span>
+          </div>
+
           <ListGroup flush>
             {cart.length > 0 &&
               cart.map((item) => (
