@@ -4,6 +4,7 @@ import Register from './components/SignInOrRegister/Register/Register';
 import HomeScreen from './screens/HomeScreen';
 import Navbar from './components/Navbar';
 import ProductPreview from './components/products/productsContainer/ProductPreview';
+import CartScreen from './components/cart/CartScreen';
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,6 +23,7 @@ function App() {
             path='/products/:id'
             component={ProductPreview}
           />
+          <Route path='/signIN' component={CartScreen} />
         </Switch>
       </Router>
     </div>

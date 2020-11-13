@@ -4,6 +4,7 @@ import {
   GET_PRODUCTS_FAIL,
   GET_PRODUCT_DETAILS_REQUEST,
   GET_PRODUCT_DETAILS_SUCCESS,
+  FILTER_PRODUCTS,
 } from '../types';
 import axios from 'axios';
 
@@ -53,4 +54,13 @@ export const getProductDetails = (id) => async (
     });
     console.log(error);
   }
+};
+
+export const filterProducts = (filteredText) => (
+  dispatch
+) => {
+  dispatch({
+    type: FILTER_PRODUCTS,
+    payload: filteredText,
+  });
 };

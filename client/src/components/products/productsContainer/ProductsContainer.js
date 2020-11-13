@@ -7,7 +7,7 @@ import { getProducts } from '../../../redux/actions/ProductsAction';
 
 const ProductsContainer = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector(
+  const { products, filtered } = useSelector(
     (state) => state.products
   );
 
@@ -20,13 +20,20 @@ const ProductsContainer = () => {
     <Container>
       <h1>NEWEST PRODUCTS!</h1>
       <Row>
-        {products &&
-          products.map((product) => (
-            <ProductItem
-              key={product.id}
-              product={product}
-            />
-          ))}
+        {filtered
+          ? filtered.map((product) => (
+              <ProductItem
+                key={product.id}
+                product={product}
+              />
+            ))
+          : products &&
+            products.map((product) => (
+              <ProductItem
+                key={product.id}
+                product={product}
+              />
+            ))}
       </Row>
     </Container>
   );

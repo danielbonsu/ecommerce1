@@ -5,6 +5,7 @@ import {
   GET_PRODUCT_DETAILS_REQUEST,
   GET_PRODUCT_DETAILS_SUCCESS,
   GET_PRODUCTS_DETAILS_FAIL,
+  FILTER_PRODUCTS,
 } from '../types';
 
 export const getProducts = (
@@ -12,6 +13,7 @@ export const getProducts = (
     products: [],
     product: [],
     loading: false,
+    filtered: [],
     errors: [],
   },
   action
@@ -55,6 +57,14 @@ export const getProducts = (
       return {
         ...state,
         errors: payload,
+      };
+
+    case FILTER_PRODUCTS:
+      return {
+        ...state,
+        filtered: state.products.filter((product) =>
+          product.name.toLowerCase().includes(payload)
+        ),
       };
 
     default:

@@ -1,10 +1,9 @@
 import React, {
   Fragment,
-  Link,
-  useEffect,
   useState,
+  useEffect,
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Nav,
   Form,
@@ -17,17 +16,21 @@ import {
 } from 'react-bootstrap';
 
 import { cartTotals } from '../utils/CartItemsTotals';
-
-import CartPreviewCard from '../components/cart/CartPreviewCard';
-import ProductItem from './products/productsItem/ProductItem';
+import { filterProducts } from '../redux/actions/ProductsAction';
 
 const NavbarMain = () => {
   const { cart } = useSelector((state) => state.cart);
-  console.log(cart, 'cartyyy');
+  const dispatch = useDispatch();
+
   const [totals, setTotals] = useState({
     totalQTY: 0,
     totalAmount: 0,
   });
+
+  const [
+    cartPreviewVisible,
+    setCartPreviewVisible,
+  ] = useState(false);
 
   return (
     <Fragment>
@@ -38,9 +41,12 @@ const NavbarMain = () => {
         <Form inline>
           <FormControl
             type='text'
-            placeholder='Search'
+            placeholder='search Products'
             className='mr-sm-2'
             style={{ width: '1120px' }}
+            onChange={(e) =>
+              dispatch(filterProducts(e.target.value))
+            }
           />
           <Button variant='outline-info'>Search</Button>
         </Form>
@@ -50,6 +56,9 @@ const NavbarMain = () => {
             <i
               className='fas fa-shopping-cart'
               style={{ position: 'relative' }}
+              onClick={() =>
+                setCartPreviewVisible(!cartPreviewVisible)
+              }
             >
               {cart && cart.length > 0 && (
                 <Badge
@@ -65,34 +74,44 @@ const NavbarMain = () => {
               )}
             </i>
           </Nav.Link>
+          <Nav.Link>
+            <i className='fas fa-user mr-1'></i>
+            <span>SIGN IN</span>
+          </Nav.Link>
         </Nav>
-        <div className='cardItemsPreview'>
-          <div className='cardItemsPreviewHeader d-flex justify-content-between px-2'>
-            <h6>subtotal-{cartTotals(cart).qtyTotals}</h6>
-            <span>
-              ${cartTotals(cart).totalPrice.toFixed(2)}
-            </span>
-          </div>
+        {cartPreviewVisible && (
+          <div className='cardItemsPreview'>
+            <div className='cardItemsPreviewHeader d-flex justify-content-between px-2'>
+              <h6>subtotal-{cartTotals(cart).qtyTotals}</h6>
+              <span>
+                ${cartTotals(cart).totalPrice.toFixed(2)}
+              </span>
+            </div>
 
-          <ListGroup flush>
-            {cart.length > 0 &&
-              cart.map((item) => (
-                <ListGroup.Item className='mb-2'>
-                  <span>
-                    <Image
-                      src={item.image}
-                      fluid
-                      className='cartImg'
-                    />
-                  </span>
-                  <span>{item.qty}</span>
-                </ListGroup.Item>
-              ))}
-            <Button variant='dark' className='mt-3'>
-              Go To Checkout
-            </Button>
-          </ListGroup>
-        </div>
+            <ListGroup flush>
+              {cart.length > 0 &&
+                cart.map((item) => (
+                  <ListGroup.Item className='mb-2 d-flex justify-content-between'>
+                    <span>
+                      <Image
+                        src={item.image}
+                        fluid
+                        className='cartImg'
+                      />
+                    </span>
+                    <span>X {item.qty}</span>
+
+                    <span>
+                      = {(item.qty * item.price).toFixed(2)}
+                    </span>
+                  </ListGroup.Item>
+                ))}
+              <Button variant='dark' className='mt-3'>
+                Go To Checkout
+              </Button>
+            </ListGroup>
+          </div>
+        )}
       </Navbar>
       <br />
     </Fragment>
