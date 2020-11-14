@@ -13,8 +13,8 @@ import {
 function App() {
   return (
     <div className='App'>
-      <Navbar />
       <Router>
+        <Navbar />
         <Switch>
           <Route exact path='/' component={HomeScreen} />
           <Route path='/register' component={Register} />

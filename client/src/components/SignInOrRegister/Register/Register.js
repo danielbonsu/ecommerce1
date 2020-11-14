@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './Register.scss';
+import Message from '../../../Alerts/Message';
 import {
   Form,
   Col,
@@ -7,7 +9,18 @@ import {
   Button,
   Card,
 } from 'react-bootstrap';
-const Register = () => {
+
+import { registerUser } from '../../../redux/actions/UserActions';
+
+const Register = ({ history }) => {
+  const { userAuthenticated } = useSelector(
+    (state) => state.currentUser
+  );
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector(
+    (state) => state.currentUser
+  );
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -25,7 +38,20 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (formData.password !== formData.confirmPassword) {
+      <Message variant='danger'>
+        passwords do not match
+      </Message>;
+    } else {
+      dispatch(
+        registerUser({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        })
+      );
+    }
   };
 
   const {
@@ -35,6 +61,12 @@ const Register = () => {
     firstName,
     lastName,
   } = formData;
+
+  useEffect(() => {
+    if (userAuthenticated) {
+      history.push('/');
+    }
+  }, [history, userAuthenticated]);
   return (
     <Row className='justify-content-md-center mt-5'>
       <Col md={4}>

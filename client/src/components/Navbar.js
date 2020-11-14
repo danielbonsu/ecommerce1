@@ -14,18 +14,18 @@ import {
   Image,
   ListGroup,
 } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { cartTotals } from '../utils/CartItemsTotals';
 import { filterProducts } from '../redux/actions/ProductsAction';
+import { signOUT } from '../redux/actions/UserActions';
 
 const NavbarMain = () => {
   const { cart } = useSelector((state) => state.cart);
+  const { userAuthenticated, userInfo } = useSelector(
+    (state) => state.currentUser
+  );
   const dispatch = useDispatch();
-
-  const [totals, setTotals] = useState({
-    totalQTY: 0,
-    totalAmount: 0,
-  });
 
   const [
     cartPreviewVisible,
@@ -51,7 +51,6 @@ const NavbarMain = () => {
           <Button variant='outline-info'>Search</Button>
         </Form>
         <Nav className='mr-auto'>
-          <Nav.Link href='/'>Home</Nav.Link>
           <Nav.Link href='#features'>
             <i
               className='fas fa-shopping-cart'
@@ -76,8 +75,34 @@ const NavbarMain = () => {
           </Nav.Link>
           <Nav.Link>
             <i className='fas fa-user mr-1'></i>
-            <span>SIGN IN</span>
+
+            {userAuthenticated ? (
+              <span>
+                Welcome
+                {userInfo && (
+                  <span className='ml-2'>
+                    {userInfo.firstName}!
+                  </span>
+                )}
+              </span>
+            ) : (
+              <LinkContainer to='/signIN'>
+                <span>SIGN IN</span>
+              </LinkContainer>
+            )}
           </Nav.Link>
+
+          {userAuthenticated && (
+            <Nav.Link href='/' className='d-flex'>
+              <i className='fas fa-sign-out-alt'></i>
+              <span
+                className='ml-2'
+                onClick={() => dispatch(signOUT())}
+              >
+                SIGN OUT
+              </span>
+            </Nav.Link>
+          )}
         </Nav>
         {cartPreviewVisible && (
           <div className='cardItemsPreview'>

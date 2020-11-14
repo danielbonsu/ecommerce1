@@ -16,12 +16,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { getProducts } from './redux/reducers/ProductsReducer';
 import { cartReducer } from './redux/reducers/CartReducer';
+import { getCurrentUser } from './redux/reducers/UsersReducer';
 
 const middlewares = [logger, thunk];
 
 const rootReducer = combineReducers({
   products: getProducts,
   cart: cartReducer,
+  currentUser: getCurrentUser,
 });
 
 const persistConfig = {

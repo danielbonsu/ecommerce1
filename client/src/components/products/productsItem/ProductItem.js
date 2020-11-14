@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useStore } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addCartItem } from '../../../redux/actions/CartActions';
 
 import './ProductItem.scss';
@@ -81,17 +81,32 @@ const ProductItem = ({ product }) => {
                     </ListGroup.Item>
                   )}
                   <ListGroup.Item>
-                    <Button
-                      variant='dark'
-                      className='btn btn-block'
-                      onClick={() =>
-                        dispatch(
-                          addCartItem(product._id, qty)
-                        )
-                      }
-                    >
-                      ADD TO CART
-                    </Button>
+                    {product.countInStock < 1 ? (
+                      <Button
+                        variant='dark'
+                        className='btn btn-block'
+                        onClick={() =>
+                          dispatch(
+                            addCartItem(product._id, qty)
+                          )
+                        }
+                        disabled
+                      >
+                        ADD TO CART
+                      </Button>
+                    ) : (
+                      <Button
+                        variant='dark'
+                        className='btn btn-block'
+                        onClick={() =>
+                          dispatch(
+                            addCartItem(product._id, qty)
+                          )
+                        }
+                      >
+                        ADD TO CART
+                      </Button>
+                    )}
                   </ListGroup.Item>
                 </ListGroup>
               </Col>

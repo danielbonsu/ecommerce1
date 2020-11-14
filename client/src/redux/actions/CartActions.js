@@ -6,7 +6,7 @@ export const addCartItem = (productID, qty) => async (
 ) => {
   try {
     const { data } = await axios.get(
-      `/products/product/${productID}`
+      `/api/products/product/${productID}`
     );
 
     const product = { ...data, qty };

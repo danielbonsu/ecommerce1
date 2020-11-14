@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import './SignIN.scss';
 import {
   Form,
@@ -6,8 +8,12 @@ import {
   Row,
   Button,
   Card,
+  Alert,
 } from 'react-bootstrap';
-const SignIN = () => {
+
+import { signIN } from '../../../redux/actions/UserActions';
+
+const SignIN = ({ history }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -22,16 +28,31 @@ const SignIN = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(signIN(formData));
   };
 
+  const dispatch = useDispatch();
+  const { userAuthenticated } = useSelector(
+    (state) => state.currentUser
+  );
+
   const { email, password } = formData;
+
+  useEffect(() => {
+    if (userAuthenticated) {
+      history.push('/');
+    }
+    return () => {};
+  }, [history, userAuthenticated]);
+
   return (
-    <Row>
-      <Col>
+    <Row className='d-flex justify-content-md-center align-items-center'>
+      <Col md={4}>
         <Card className='p-4'>
           <Form onSubmit={onSubmit}>
-            <h1>Already have an account? Sign In</h1>
+            <h5 className='text-center'>
+              Already have an account? Sign In
+            </h5>
             <Form.Group controlId='email'>
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -48,15 +69,28 @@ const SignIN = () => {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type='password'
-                name='email'
+                name='password'
                 value={password}
                 onChange={onChange}
                 placeholder='password'
                 required
               ></Form.Control>
-              <Button type='submit' variant='secondary'>
+              <Button
+                type='submit'
+                variant='secondary'
+                className='mt-3 btn btn-block'
+              >
                 Submit
               </Button>
+              <Alert
+                variant='info'
+                className='text-center mt-3'
+              >
+                Dont have an account yet?{' '}
+                <LinkContainer to='/register'>
+                  <Alert.Link>Register</Alert.Link>
+                </LinkContainer>
+              </Alert>
             </Form.Group>
           </Form>
         </Card>
