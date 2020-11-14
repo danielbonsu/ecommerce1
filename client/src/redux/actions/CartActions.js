@@ -1,4 +1,9 @@
-import { ADD_PRODUCT_TO_CART } from '../types';
+import {
+  ADD_PRODUCT_TO_CART,
+  INCREASE_CART_QTY,
+  DECREASE_CART_QTY,
+  REMOVE_PRODUCT_FROM_CART,
+} from '../types';
 import axios from 'axios';
 
 export const addCartItem = (productID, qty) => async (
@@ -17,5 +22,26 @@ export const addCartItem = (productID, qty) => async (
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const increaseCartQTY = (cartItem) => (dispatch) => {
+  dispatch({
+    type: INCREASE_CART_QTY,
+    payload: cartItem,
+  });
+};
+
+export const decreaseCartQTY = (cartItem) => (dispatch) => {
+  if (cartItem.qty === 1) {
+    dispatch({
+      type: REMOVE_PRODUCT_FROM_CART,
+      payload: cartItem,
+    });
+  } else {
+    dispatch({
+      type: DECREASE_CART_QTY,
+      payload: cartItem,
+    });
   }
 };

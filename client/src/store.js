@@ -18,7 +18,7 @@ import { getProducts } from './redux/reducers/ProductsReducer';
 import { cartReducer } from './redux/reducers/CartReducer';
 import { getCurrentUser } from './redux/reducers/UsersReducer';
 
-const middlewares = [logger, thunk];
+const middlewares = [thunk];
 
 const rootReducer = combineReducers({
   products: getProducts,

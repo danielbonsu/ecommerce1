@@ -1,0 +1,28 @@
+.qtyContainer {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: #dddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.qtyManipulator {
+  width: 110px;
+}
+
+.qtyBTN:hover {
+  opacity: 0.7;
+
+  cursor: pointer;
+}
+
+.qtyManipulator i {
+  font-size: 30px;
+}
+
+.qtyBTN:hover {
+  color: skyblue;
+}

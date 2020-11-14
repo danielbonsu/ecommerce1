@@ -23,7 +23,7 @@ function App() {
             path='/products/:id'
             component={ProductPreview}
           />
-          <Route path='/signIN' component={CartScreen} />
+          <Route path='/cart' component={CartScreen} />
         </Switch>
       </Router>
     </div>

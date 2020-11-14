@@ -1,8 +1,4 @@
-import React, {
-  Fragment,
-  useState,
-  useEffect,
-} from 'react';
+import React, { Fragment, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Nav,
@@ -48,10 +44,9 @@ const NavbarMain = () => {
               dispatch(filterProducts(e.target.value))
             }
           />
-          <Button variant='outline-info'>Search</Button>
         </Form>
         <Nav className='mr-auto'>
-          <Nav.Link href='#features'>
+          <Nav.Link href='#!'>
             <i
               className='fas fa-shopping-cart'
               style={{ position: 'relative' }}
@@ -115,25 +110,33 @@ const NavbarMain = () => {
 
             <ListGroup flush>
               {cart.length > 0 &&
-                cart.map((item) => (
-                  <ListGroup.Item className='mb-2 d-flex justify-content-between'>
-                    <span>
-                      <Image
-                        src={item.image}
-                        fluid
-                        className='cartImg'
-                      />
-                    </span>
-                    <span>X {item.qty}</span>
+                cart
+                  .filter((item) => item.qty)
+                  .map((item) => (
+                    <ListGroup.Item
+                      key={item._id}
+                      className='mb-2 d-flex justify-content-between'
+                    >
+                      <span>
+                        <Image
+                          src={item.image}
+                          fluid
+                          className='cartImg'
+                        />
+                      </span>
+                      <span>X {item.qty}</span>
 
-                    <span>
-                      = {(item.qty * item.price).toFixed(2)}
-                    </span>
-                  </ListGroup.Item>
-                ))}
-              <Button variant='dark' className='mt-3'>
-                Go To Checkout
-              </Button>
+                      <span>
+                        ={' '}
+                        {(item.qty * item.price).toFixed(2)}
+                      </span>
+                    </ListGroup.Item>
+                  ))}
+              <LinkContainer to='/cart'>
+                <Button variant='dark' className='mt-3'>
+                  Go To Cart
+                </Button>
+              </LinkContainer>
             </ListGroup>
           </div>
         )}
