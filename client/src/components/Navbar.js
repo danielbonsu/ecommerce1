@@ -108,11 +108,10 @@ const NavbarMain = () => {
               </span>
             </div>
 
-            <ListGroup flush>
-              {cart.length > 0 &&
-                cart
-                  .filter((item) => item.qty)
-                  .map((item) => (
+            {cartPreviewVisible && (
+              <ListGroup flush>
+                {cart.length > 0 &&
+                  cart.map((item) => (
                     <ListGroup.Item
                       key={item._id}
                       className='mb-2 d-flex justify-content-between'
@@ -132,12 +131,17 @@ const NavbarMain = () => {
                       </span>
                     </ListGroup.Item>
                   ))}
-              <LinkContainer to='/cart'>
-                <Button variant='dark' className='mt-3'>
-                  Go To Cart
-                </Button>
-              </LinkContainer>
-            </ListGroup>
+                <LinkContainer to='/cart'>
+                  <Button
+                    variant='dark'
+                    className='mt-3'
+                    onClick={() => setCartPreviewVisible()}
+                  >
+                    Go To Cart
+                  </Button>
+                </LinkContainer>
+              </ListGroup>
+            )}
           </div>
         )}
       </Navbar>
