@@ -25,6 +25,13 @@ export const addCartItem = (productID, qty) => async (
   }
 };
 
+export const removeCartItem = (cartItem) => (dispatch) => {
+  dispatch({
+    type: REMOVE_PRODUCT_FROM_CART,
+    payload: cartItem,
+  });
+};
+
 export const increaseCartQTY = (cartItem) => (dispatch) => {
   dispatch({
     type: INCREASE_CART_QTY,
