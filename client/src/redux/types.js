@@ -30,3 +30,7 @@ export const REMOVE_PRODUCT_FROM_CART =
 
 export const INCREASE_CART_QTY = 'INCREASE_CART_QTY';
 export const DECREASE_CART_QTY = 'DECREASE_CART_QTY';
+
+// remove errors after some time
+
+export const REMOVE_ALERT_MESSAGE = 'REMOVE_ALERT_MESSAGE';

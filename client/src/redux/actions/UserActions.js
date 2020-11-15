@@ -6,9 +6,11 @@ import {
   USER_AUTH_SUCCESS,
   USER_AUTH_FAIL,
   USER_SIGN_OUT,
+  REMOVE_ALERT_MESSAGE,
 } from '../types';
 
 import axios from 'axios';
+import { v4 as uuid } from 'uuid';
 
 export const registerUser = (user_Obj) => async (
   dispatch
@@ -37,9 +39,13 @@ export const registerUser = (user_Obj) => async (
       payload: data,
     });
   } catch (error) {
+    const errors = {
+      id: uuid,
+      message: error,
+    };
     dispatch({
       type: REGISTER_USER_FAIL,
-      payload: error,
+      payload: errors,
     });
   }
 };
@@ -71,11 +77,21 @@ export const signIN = (user_obj) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    const errors = {
+      id: uuid(),
+      error: error.response.data,
+    };
     dispatch({
       type: USER_AUTH_FAIL,
-      payload: error,
+      payload: errors,
     });
+
+    setTimeout(() => {
+      dispatch({
+        type: REMOVE_ALERT_MESSAGE,
+        payload: errors.id,
+      });
+    }, 5000);
   }
 };
 

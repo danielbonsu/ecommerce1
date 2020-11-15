@@ -6,6 +6,7 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
+  REMOVE_ALERT_MESSAGE,
 } from '../types';
 
 export const getCurrentUser = (
@@ -43,7 +44,7 @@ export const getCurrentUser = (
         loading: false,
         userInfo: null,
         userAuthenticated: false,
-        errors: payload,
+        errors: [...state.errors, payload],
       };
 
     case USER_SIGN_OUT:
@@ -52,6 +53,14 @@ export const getCurrentUser = (
         loading: false,
         userInfo: null,
         userAuthenticated: false,
+      };
+
+    case REMOVE_ALERT_MESSAGE:
+      return {
+        ...state,
+        errors: state.errors.filter(
+          (error) => error.id !== payload
+        ),
       };
 
     default:
