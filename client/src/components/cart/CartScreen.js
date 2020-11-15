@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { cartTotals } from '../../utils/CartItemsTotals';
 import {
   Alert,
   Row,
@@ -9,6 +10,7 @@ import {
   ListGroup,
   Container,
   Button,
+  Form,
 } from 'react-bootstrap';
 
 import {
@@ -80,7 +82,14 @@ const CartScreen = () => {
                         <Button variant='link'>
                           save for later
                         </Button>
-                        <Button variant='link'>
+                        <Button
+                          variant='link'
+                          onClick={() =>
+                            dispatch(
+                              removeCartItem(cartItem)
+                            )
+                          }
+                        >
                           remove item
                         </Button>
                       </ListGroup.Item>
@@ -104,7 +113,7 @@ const CartScreen = () => {
             <Card.Body>
               <ListGroup.Item className='d-flex justify-content-between'>
                 <span>Subtotal:</span>
-                <span>$0.0</span>
+                <span>{cartTotals(cart).totalPrice}</span>
               </ListGroup.Item>
               <ListGroup.Item className='d-flex justify-content-between'>
                 <span>ESTIMATED SHIPPING:</span>
@@ -121,6 +130,15 @@ const CartScreen = () => {
             </Card.Body>
           </Card>
           <Card>
+            <Form>
+              <Form.Control
+                type='text'
+                placeholder='enter promotion code to apply'
+                name='coupon'
+                className='m-2'
+                style={{ width: '95%' }}
+              ></Form.Control>
+            </Form>
             <Card.Body>
               <Button
                 variant='danger'
